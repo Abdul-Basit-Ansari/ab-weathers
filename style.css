@@ -60,6 +60,15 @@ h6 {
 }
 
 
+.mybg {
+	background-size: cover;
+	/* background-image:url(img/bg2.jpg); */
+	background-image: linear-gradient(#2c3e50 100%, #000 74%);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+
 .site-header {
 	padding: 50px 0;
 }
@@ -97,7 +106,7 @@ h6 {
 	height: 40px;
 	display: inline-block;
 	border-radius: 50%;
-	background: #1e202b;
+	background: #262936;
 	color: #009ad8;
 	text-align: center;
 	line-height: 2;
@@ -105,6 +114,13 @@ h6 {
 	transition: .3s ease;
 	font-size: 20px;
 	font-size: 1.4285714286em;
+	-moz-transition: .3s ease;
+	-ms-transition: .3s ease;
+	-o-transition: .3s ease;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
 }
 
 .site-footer .social-links a:hover {
@@ -113,10 +129,15 @@ h6 {
 }
 
 .site-footer {
-	background: #262936;
+	background: #1e202b;
 	padding: 50px 0;
 }
+.site-footer .container{
+	display: flex;
+	justify-content: space-between;
+	
 
+}
 .container {
 	margin-right: auto;
 	margin-left: auto;
@@ -170,14 +191,21 @@ h6 {
 
 .forecast-container {
 	width: 100%;
-	background: #323544;
+	/* background: #323544; */
 	display: table;
 	table-layout: fixed;
 	width: 100%;
 	overflow: hidden;
-	border-radius: 10px;
+	/* border-radius: 10px; */
 	margin-top: -150px;
 	margin-bottom: 50px;
+	/* From https://css.glass */
+	background: rgba(255, 255, 255, 0.11);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.1px);
+-webkit-backdrop-filter: blur(4.1px);
+border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .forecast-container .forecast {
@@ -411,9 +439,7 @@ h6 {
 .hero {
 	background-size: cover;
 	padding: 70px 0;
-	background-image:url(img/bg1.jpeg);
-	background-size: 100%;
-	background-repeat: no-repeat;
+	
 	min-height: 350px;
 }
 
@@ -1602,3 +1628,5 @@ ul, ol {
 		display: none !important;
 	}
 }
+
+

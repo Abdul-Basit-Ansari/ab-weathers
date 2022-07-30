@@ -51,143 +51,37 @@
                 <div class="mobile-navigation"></div>
 
             </div>
-        </div> <!-- .site-header -->
+        </div> 
+        <!-- .site-header -->
         <!-- <div class="hero" data-bg-image="images/banner.png"> -->
-        <div class="hero" data-bg-image="img/bg1.jpeg">
-            <div class="container">
-                <form onsubmit="myweather(); return false" class="find-location">
-                    <input type="text" id="mycity" placeholder="Find your location...">
-                    <input type="submit" value="Find">
-                </form>
+        <div class="mybg" data-bg-image="img/bg1.jpeg">
 
-            </div>
+            <div class="hero">
+                <div class="container">
+                    <form onsubmit="myweather(); return false" class="find-location">
+                        <input type="text" id="mycity" placeholder="Find your location...">
+                        <input type="submit" value="Find">
+                    </form>
 
-
-
-
-            <script>
-                function myweather() {
-
-                    let mycity = document.getElementById('mycity').value;
-                    axios.get(`https://api.weatherapi.com/v1/current.json?key=76007bb94a1842099f7154509222907&q=${mycity}&aqi=no`)
-                        .then(function (response) {
-                            let result = document.getElementById('weatherResult');
-                            result.innerHTML = "";
-                            let data = response.data;
-                            let city = data.location.name;
-                            let region = data.location.region;
-                            let country = data.location.country;
-                            let weatherLogo = data.current.condition.icon;
-                            let weathertext = data.current.condition.text;
-                            let windmph = data.current.wind_mph;
-                            let temp = data.current.temp_c;
-                            let cloud = data.current.cloud;
-                            let lastupdate = data.current.last_updated;
-                            let ltime = data.location.localtime;
-
-
-                            let currentdate = new Date();
-                            const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-                            let day = weekday[currentdate.getDay()];
-                            let datetime = "" + currentdate.getDay() + "/" + currentdate.getMonth()
-                                + "/" + currentdate.getFullYear()
-                            console.log(datetime,);
-                            
-                            var createdDate = ltime;
-                            createdDate = new Date(createdDate);
-                            date = createdDate.toLocaleDateString();
-                            time = createdDate.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
-                            result.innerHTML = `<div  class="forecast-container">
-                            <div class="today forecast">
-                                <div class="forecast-header">
-                                    <div class="day">${day}</div>
-                                    <div class="date">${date + '   ' + time}</div>
-
-                                </div> <!-- .forecast-header -->
-                                <div class="forecast-content">
-                                    <div class="location">
-                                    <div class="mycity">
-                                        <img class="locationmark" src="images/icon-marker.png" alt="">&nbsp;&nbsp;&nbsp;${city}
-                                        
-                                       
-                                        </div>
-                                    <div>
-                                        <div class="mycountry">${country}</div>
-                                        <h3>${weathertext}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="degree">
-                                        <div class="num">${temp}<sup>o</sup>C</div>
-                                        <div class="forecast-icon">
-                                            <img src="${weatherLogo}" alt="" width=90>
-                                            </div>
-                                            </div>
-                                            
-                                    
-                                    <span><img src="images/icon-wind.png" alt="">${windmph}mph</span>
-                                    
-                                    <span><img src="images/mylogo.png" alt="">${cloud}</span>
-                                </div>
-                            </div>    
-                        </div>`
-
-                            // handle success
-                            console.log('city', city, 'temp :', temp);
-                            console.log('after', result);
-                            console.log(data);
-                        })
-                        .catch(function (error) {
-                            // handle error
-                            console.log(error);
-                        })
-                        .then(function () {
-                            // always executed
-                        });
-                }
-            </script>
-
-
-
-
-
-
-        </div>
-        <div class="forecast-table">
-            <div id="weatherResult" class="container">
-
-                <div class="forecast-container">
-
-                    <div class="today forecast">
-                        <div class="forecast-header">
-                            <div class="day">Monday</div>
-                            <div class="date">6 Oct</div>
-                        </div>
-                        <!-- .forecast-header -->
-                        <div class="forecast-content">
-                            <div class="location">New York</div>
-                            <div class="degree">
-                                <div class="num">23<sup>o</sup>C</div>
-                                <div class="forecast-icon">
-                                    <img src="images/icons/icon-1.svg" alt="" width=90>
-                                </div>
-                            </div>
-                            <span><img src="images/icon-umberella.png" alt="">20%</span>
-                            <span><img src="images/icon-wind.png" alt="">18km/h</span>
-                            <span><img src="images/icon-compass.png" alt="">East</span>
-                        </div>
-                    </div>
                 </div>
-
             </div>
-        </div>
 
+
+
+            <div style="font-size: 20px;padding: 10px;background-color:black ;width:100%;text-align: center;" id="access">
+            </div>
+            <div class="forecast-table">
+                <div id="weatherResult" style="height:435px;" class="container">
+                </div>
+            </div>
+
+        </div>
 
         <footer class="site-footer">
             <div class="container">
                 <!-- <div class="row"> -->
                 <p class="colophon">Developed By Abdul Basit Ansari&copy;&nbsp;2022 </p>
-                <div class="col-md-3 col-md-offset-1">
+                <div class="myr col-md-3 col-md-offset-1">
                     <div class="social-links">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
@@ -204,13 +98,15 @@
 
 
 
+   
 
 
 
-
-
-    <script src="js/jquery-1.11.1.min.js"></script>
+    <!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/script.js"></script>
+
 
 </body>
 
@@ -221,7 +117,25 @@
 
 
 <!-- MAIN -->
-
+<!-- <div class="today forecast">
+    <div class="forecast-header">
+        <div class="day">Monday</div>
+        <div class="date">6 Oct</div>
+    </div> -->
+<!-- .forecast-header -->
+<!-- <div class="forecast-content">
+        <div class="location">New York</div>
+        <div class="degree">
+            <div class="num">23<sup>o</sup>C</div>
+            <div class="forecast-icon">
+                <img src="images/icons/icon-1.svg" alt="" width=90>
+            </div>
+        </div>
+        <span><img src="images/icon-umberella.png" alt="">20%</span>
+        <span><img src="images/icon-wind.png" alt="">18km/h</span>
+        <span><img src="images/icon-compass.png" alt="">East</span>
+    </div>
+</div> -->
 
 <!-- End MIAN -->
 
