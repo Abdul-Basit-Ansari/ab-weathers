@@ -14,31 +14,28 @@ window.onload = function getLocation() {
     }
 }
 
-//-------------------- Function Running Two Parameters (onSuccess, onError) --------------------
 
 
-//-------------------- onSuccess Parameter --------------------
 function onSuccess(position) {
     access.innerHTML = "Detecting your location...";
     let { latitude, longitude } = position.coords;
 
-    //-------------------- Fetching Location Using API --------------------
+
     fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=e228ae2eaf8f4751afb78f864bdf52ea`)
         .then(response => response.json()).then(result => {
-            allDetails = result.results[0].components;//getting the details of the location
+            allDetails = result.results[0].components;
             console.table(allDetails);
-            let { city } = allDetails;//getting the details of the location
+            let { city } = allDetails;
             city = city;
             access.innerHTML = "";
-            //-------------------- Fetching Location Using API --------------------
+           
 
-            //-------------------- Fetching Weather Using API --------------------
+            
             axios.get(`https://api.weatherapi.com/v1/current.json?key=76007bb94a1842099f7154509222907&q=${city}&aqi=no`)
                 .then(function (response) {
                     console.log(response.data);
 
-                    //-------------------- Weather Icon --------------------
-                    //-------------------- Weather Icon --------------------
+                    
 
 					let result = document.getElementById('weatherResult');
 					result.innerHTML = "";
@@ -102,22 +99,22 @@ function onSuccess(position) {
 				</div>`
 		
                 })
-            //-------------------- Fetching Weather Using API --------------------
+           
         });
     access.innerHTML = "";
 
 }
 
-//-------------------- onError Parameter --------------------
+
 function onError(error) {
     console.log(error);
-    if (error.code == 1) {//if user denied to share location
+    if (error.code == 1) {
         access.innerHTML = "User denied the request for Geolocation.";
     }
-    else if (error.code == 2) {//if location is not found
+    else if (error.code == 2) {
         access.innerHTML = "Location information is unavailable.";
     }
-    else if (error.code == 3) {//if any other error occured
+    else if (error.code == 3) {
         access.innerHTML = "Something went wrong.";
     }
 }
