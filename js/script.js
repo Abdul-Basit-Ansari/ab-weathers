@@ -24,52 +24,40 @@ function onSuccess(position) {
     fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=e228ae2eaf8f4751afb78f864bdf52ea`)
         .then(response => response.json()).then(result => {
             allDetails = result.results[0].components;
-            console.table(allDetails);
             let { city } = allDetails;
             city = city;
             access.innerHTML = "";
            
 
-            
-            axios.get(`https://api.weatherapi.com/v1/current.json?key=76007bb94a1842099f7154509222907&q=${city}&aqi=no`)
+            let API_KEY = "37881bc9846791ec35df3a34271cf5d4";
+            axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`)
                 .then(function (response) {
-                    console.log(response.data);
+                    console.log("Wahi Walar",response.data);
 
                     
 
 					let result = document.getElementById('weatherResult');
 					result.innerHTML = "";
 					let data = response.data;
-					let city = data.location.name;
-					let region = data.location.region;
-					let country = data.location.country;
-					let icon = data.current.condition.icon;
-					let weathertext = data.current.condition.text;
-					let windmph = data.current.wind_mph;
-					let windkph = data.current.wind_kph;
-					let temp = data.current.temp_c;
-					let cloud = data.current.cloud;
-					let humidity = data.current.humidity;
-					let lastupdate = data.current.last_updated;
-					let ltime = data.location.localtime;
+					let city = data.city.name;
+					let country = data.city.country;
+					let weathertext = data.list[0].weather[0].description;
+					let windkph = data.list[0].wind.speed;
+					let temp = data.list[0].main.temp;
+					let feelsLike = data.list[0].main.feels_like;
+					let humidity = data.list[0].main.humidity;
 					let currentdate = new Date();
 					const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		
 					let day = weekday[currentdate.getDay()];
-					let datetime = "" + currentdate.getDay() + "/" + currentdate.getMonth()
-						+ "/" + currentdate.getFullYear()
-					console.log(datetime,);
-					
-					let createdDate = ltime;
-					createdDate = new Date(createdDate);
-					let date = createdDate.toLocaleDateString();
-					let time = createdDate.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
+					let datetime = "" + currentdate.getDate() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear()
+					console.log(datetime, currentdate);
+					let time = currentdate.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
 					access.style.display = 'none';
 					result.innerHTML = `<div  class="forecast-container myglass">
 					<div class="today forecast">
 						<div class="forecast-header">
 							<div class="day">${day}</div>
-							<div class="date">${date + '   ' + time}</div>
+							<div class="date">${datetime + '   ' + time}</div>
 		
 						</div> <!-- .forecast-header -->
 						<div class="forecast-content">
@@ -77,27 +65,26 @@ function onSuccess(position) {
 							<div class="mycity">
 								<img class="locationmark" src="images/icon-marker.png" alt="">&nbsp;&nbsp;&nbsp;${city}
 							   <p>Humidity : ${humidity} %</p>
+							   <p>Feels Like : ${feelsLike} %</p>
 								</div>
 							<div>
 								<div class="mycountry">${country}</div>
-								<p>${weathertext}</p>
+								<p>${weathertext.toUpperCase()}</p>
 								</div>
 							</div>
 							<div class="degree">
 								<div class="num">${temp}<sup>o</sup>C</div>
 								<div class="forecast-icon">
-									<img src="${icon}" alt="" width=90>
+									<img src="icon" alt="" width=90>
 									</div>
 									</div>
 									
 							
 							<span style="display:inline-block;margin-top:20px;"><img src="images/icon-wind.png" alt="">${windkph}km/h</span>
 							
-							<span><img src="images/mylogo.png" alt="">${cloud}</span>
 						</div>
 					</div>    
 				</div>`
-		
                 })
            
         });
@@ -126,76 +113,57 @@ function onError(error) {
 function myweather() {
 
 	let mycity = document.getElementById('mycity').value;
-	axios.get(`https://api.weatherapi.com/v1/current.json?key=76007bb94a1842099f7154509222907&q=${mycity}&aqi=no`)
+	let API_KEY = "37881bc9846791ec35df3a34271cf5d4";
+	axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${mycity}&appid=${API_KEY}&units=metric`)
+	// axios.get(`https://api.weatherapi.com/v1/current.json?key=76007bb94a1842099f7154509222907&q=${city}&aqi=no`)
 		.then(function (response) {
+			console.log("Wahi Walar",response.data);
+
 			
-			
+
 			let result = document.getElementById('weatherResult');
-					result.innerHTML = "";
-					let data = response.data;
-					let city = data.location.name;
-					let region = data.location.region;
-					let country = data.location.country;
-					let icon = data.current.condition.icon;
-					let weathertext = data.current.condition.text;
-					let windmph = data.current.wind_mph;
-					let windkph = data.current.wind_kph;
-					let temp = data.current.temp_c;
-					let cloud = data.current.cloud;
-					let humidity = data.current.humidity;
-					let lastupdate = data.current.last_updated;
-					let ltime = data.location.localtime;
-					let currentdate = new Date();
-					const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		
-					let day = weekday[currentdate.getDay()];
-					let datetime = "" + currentdate.getDay() + "/" + currentdate.getMonth()
-						+ "/" + currentdate.getFullYear()
-					console.log(datetime,);
-					
-					let createdDate = ltime;
-					createdDate = new Date(createdDate);
-					let date = createdDate.toLocaleDateString();
-					let time = createdDate.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
-					access.style.display = 'none';
+			result.innerHTML = "";
+			let data = response.data;
+			let city = data.city.name;
+			let country = data.city.country;
+			let weathertext = data.list[0].weather[0].description;
+			let windkph = data.list[0].wind.speed;
+			let temp = data.list[0].main.temp;
+			let feelsLike = data.list[0].main.feels_like;
+			let humidity = data.list[0].main.humidity;
 
-					result.innerHTML = `<div  class="forecast-container myglass">
-					<div class="today forecast">
-						<div class="forecast-header">
-							<div class="day">${day}</div>
-							<div class="date">${date + '   ' + time}</div>
-		
-						</div> <!-- .forecast-header -->
-						<div class="forecast-content">
-							<div class="location">
-							<div class="mycity">
-								<img class="locationmark" src="images/icon-marker.png" alt="">&nbsp;&nbsp;&nbsp;${city}
-							   <p>Humidity : ${humidity} %</p>
-								</div>
-							<div>
-								<div class="mycountry">${country}</div>
-								<p>${weathertext}</p>
-								</div>
-							</div>
-							<div class="degree">
-								<div class="num">${temp}<sup>o</sup>C</div>
-								<div class="forecast-icon">
-									<img src="${icon}" alt="" width=90>
-									</div>
-									</div>
-									
-							
-							<span style="display:inline-block;margin-top:20px;"><img src="images/icon-wind.png" alt="">${windkph}km/h</span>
-							
-							<span><img src="images/mylogo.png" alt="">${cloud}</span>
+			access.style.display = 'none';
+			
+			result.innerHTML = `<div  class="forecast-container myglass">
+			<div class="today forecast">
+				<div class="forecast-header">
+
+				</div> <!-- .forecast-header -->
+				<div class="forecast-content">
+					<div class="location">
+					<div class="mycity">
+						<img class="locationmark" src="images/icon-marker.png" alt="">&nbsp;&nbsp;&nbsp;${city}
+					   <p>Humidity : ${humidity} %</p>
+					   <p>Feels Like : ${feelsLike} %</p>
 						</div>
-					</div>    
-				</div>`
-
-			// handle success
-			console.log('city', city, 'temp :', temp);
-			console.log('after', result);
-			console.log(data);
+					<div>
+						<div class="mycountry">${country}</div>
+						<p>${weathertext.toUpperCase()}</p>
+						</div>
+					</div>
+					<div class="degree">
+						<div class="num">${temp}<sup>o</sup>C</div>
+							</div>
+							
+					
+					<span style="display:inline-block;margin-top:20px;"><img src="images/icon-wind.png" alt="">${windkph}km/h</span>
+					
+				</div>
+			</div>    
+		</div>` 
+		
+		
+		// handle success
 		})
 		.catch(function (error) {
 			// handle error
